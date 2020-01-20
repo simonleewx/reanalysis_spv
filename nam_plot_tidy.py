@@ -22,8 +22,8 @@ def plot_nam(year,month,day,lag1,lag2):
 
 	f.close()
 
-	clevs = np.arange(-4,4.5,0.5)
-	cr_levs = np.concatenate((np.arange(-10,0,1),np.arange(1,11,1)))
+	clevs = np.arange(-4,4.5,0.5) # filled contour levels
+	cr_levs = np.concatenate((np.arange(-10,0,1),np.arange(1,11,1))) # contour line levels, not including 0
 	nlevs = len(clevs)-1
 	cmap = plt.get_cmap(name='RdBu',lut=nlevs)
 
@@ -32,12 +32,12 @@ def plot_nam(year,month,day,lag1,lag2):
 	cf = plt.contourf(time_plot,levs,nam_plot.transpose(),levels=clevs,cmap=cmap,extend='both')
 	cr = plt.contour(time_plot,levs,nam_plot.transpose(),levels=cr_levs,colors='k',extend='both')
 	plt.clabel(cr,inline=1,fmt='%d')
-	cmap._lut[int(nlevs/2)-1:int(nlevs/2)+1] = [1.,1.,1.,1.]
+	cmap._lut[int(nlevs/2)-1:int(nlevs/2)+1] = [1.,1.,1.,1.] # make centre of colorbar white
 	cb = plt.colorbar(cf,drawedges=True)
 	cb.set_label("Standardised departure ($\sigma$)")
 	plt.ylabel("Pressure (hPa)")
 	plt.semilogy(subsy=[1000,700,500,300,200,100,70,30,10,5,1])
-	ax.yaxis.set_major_formatter(ScalarFormatter())
+	ax.yaxis.set_major_formatter(ScalarFormatter()) 
 	ax.yaxis.set_minor_formatter(ScalarFormatter())
 	plt.setp(ax.xaxis.get_majorticklabels(), rotation=90)
 	plt.axvline(x=date,linestyle='--',color='k') ## vertical line on central date
